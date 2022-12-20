@@ -6,7 +6,8 @@
     "module": "CommonJS",
     "moduleResolution": "node",
     "outDir": "./lib",
-    "declarationDir": "./lib/types"
+    "declarationDir": "./lib/types",
+    "allowUmdGlobalAccess": true
   },
   "exclude": ["tests/**/*.test.ts"]
 }

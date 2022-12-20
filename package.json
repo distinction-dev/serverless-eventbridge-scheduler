@@ -12,7 +12,8 @@
     "prepare": "husky install",
     "semantic-release": "semantic-release",
     "type-check": "tsc --noEmit",
-    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'tests/**/*.ts'"
+    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'tests/**/*.ts'",
+    "postinstall": "npx patch-package"
   },
   "main": "./lib/index.js",
   "types": "./lib/types/index.d.ts",
