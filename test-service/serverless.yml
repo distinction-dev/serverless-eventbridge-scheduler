@@ -12,16 +12,12 @@ functions:
   hello:
     handler: handler.hello
     events:
-      - schedule:
-          rate: cron(0 10 * * ? *)
-          name: test-crontab
-          timezone: America/New_York
-      - schedule:
-          rate: cron(0 5 * * ? *)
-          timezone: America/New_York
-      - schedule:
+      - evSchedule:
           rate:
-            - cron(0 5 * * ? *)
-            - cron(0 6 * * ? *)
-          timezone: America/New_York
+            - rate(5 minutes)
+          name: test-crontab
+          timezone: Asia/Kolkata
+          input:
+            prop1: value1
+            prop2: value2
 validate: true
