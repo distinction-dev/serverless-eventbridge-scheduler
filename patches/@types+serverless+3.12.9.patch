@@ -1,5 +1,5 @@
 diff --git a/node_modules/@types/serverless/plugins/aws/provider/awsProvider.d.ts b/node_modules/@types/serverless/plugins/aws/provider/awsProvider.d.ts
-index de8cdc7..b350369 100755
+index de8cdc7..1940eb6 100755
 --- a/node_modules/@types/serverless/plugins/aws/provider/awsProvider.d.ts
 +++ b/node_modules/@types/serverless/plugins/aws/provider/awsProvider.d.ts
 @@ -1,779 +1,800 @@
@@ -1556,7 +1556,7 @@ index de8cdc7..b350369 100755
 -    ): Promise<any>;
 +  constructor(serverless: Serverless, options: Serverless.Options);
 +
-+  naming: { [key: string]: (...args: (string | number)[]) => string };
++  naming: { [key: string]: (...args: string[]) => string };
 +  getCredentials(): Aws.Credentials;
 +  getProviderName(): string;
 +  getRegion(): string;
