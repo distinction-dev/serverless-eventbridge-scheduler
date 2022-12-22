@@ -1,4 +1,5 @@
 import { FromSchema } from "json-schema-to-ts";
+import { TIME_ZONES } from "./timezone";
 
 export const RATE_PATTERN =
   "^rate\\((?:1 (?:minute|hour|day)|(?:1\\d+|[2-9]\\d*) (?:minute|hour|day)s)\\)$";
@@ -9,14 +10,25 @@ export const SchedulerObjectSchema = {
   type: "object",
   properties: {
     rate: {
-      type: "array",
-      minItems: 1,
-      items: {
-        type: "string",
-        pattern: SCHEDULE_PATTERN,
-      },
+      anyOf: [
+        {
+          type: "string",
+          pattern: SCHEDULE_PATTERN,
+        },
+        {
+          type: "array",
+          items: {
+            type: "string",
+            pattern: SCHEDULE_PATTERN,
+          },
+        },
+      ],
     },
-    enabled: { type: "boolean" },
+    timezone: {
+      type: "string",
+      enum: TIME_ZONES,
+    },
+    enabled: { type: "boolean", default: true },
     name: {
       type: "string",
       minLength: 1,
@@ -29,20 +41,6 @@ export const SchedulerObjectSchema = {
         { type: "string", maxLength: 8192 },
         {
           type: "object",
-          oneOf: [
-            {
-              properties: {
-                body: { type: "string", maxLength: 8192 },
-              },
-              required: ["body"],
-              additionalProperties: false,
-            },
-            {
-              not: {
-                required: ["body"],
-              },
-            },
-          ],
         },
       ],
     },
@@ -59,6 +57,34 @@ export const SchedulerObjectSchema = {
       },
       required: ["inputTemplate"],
       additionalProperties: false,
+    },
+    flexibleTimeWindow: {
+      oneOf: [
+        {
+          type: "object",
+          properties: {
+            mode: {
+              type: "string",
+              enum: ["OFF"],
+              default: "OFF",
+            },
+          },
+        },
+        {
+          type: "object",
+          properties: {
+            mode: {
+              type: "string",
+              enum: ["FLEXIBLE"],
+              default: "FLEXIBLE",
+            },
+            maximum: {
+              type: "number",
+              minimum: 0,
+            },
+          },
+        },
+      ],
     },
   },
   required: ["rate"],
